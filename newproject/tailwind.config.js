@@ -8,7 +8,7 @@ export default {
     ],
     theme: {
     extend: {fontFamily: {
-        sans: ['InterVariable', ...defaultTheme.fontFamily.sans],
+        sans: ['Roboto', 'ui-sans-serif', 'system-ui'],
     },},
     },
     plugins: [],

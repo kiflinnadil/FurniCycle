@@ -1,10 +1,12 @@
 @extends('components.layout')
-@section('title', 'About')
+@section('title', 'Blog')
 
 @section ('content')
 
-<x-slot:title>{$title}</x-slot:title>
+    <h1>My Blog{{ $judul }}</h1>
+    <p>{{ $isi }}</p>
 
-    <h1>About Me</h1>
+    <h1>My Blog{{ $judul }}</h1>
+    <p>{{ $isi }}</p>
 
 @endsection
