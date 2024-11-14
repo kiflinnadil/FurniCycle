@@ -2,10 +2,10 @@
 <nav class="" x-data="{ isOpen: false }">
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
     <div class="flex h-16 items-center justify-between">
         <div class="flex items-center">
-            <span class="text-black font-bold text-2xl">FurniCycle</span>
+            <span class="text-black font-bold text-2xl" style="font-family: 'Playfair Display'">FurniCycle</span>
         </div>
         
     <div class="hidden md:flex justify-center flex-grow">
