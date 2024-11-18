@@ -5,6 +5,6 @@
 
 <x-slot:title>{$title}</x-slot:title>
 
-    <h1>About Me</h1>
+    <h1>Shop</h1>
 
 @endsection
