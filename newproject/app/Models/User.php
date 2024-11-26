@@ -3,10 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Termwind\Components\Hr;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -51,5 +53,10 @@ class User extends Authenticatable
     public function product_transaction() : HasMany 
     {
         return $this->hasMany(ProductTransaction::class);
+    }
+
+    public function cart() : HasOne 
+    {
+        return $this->hasOne(Cart::class);
     }
 }

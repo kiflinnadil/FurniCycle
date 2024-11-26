@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -16,13 +17,25 @@ class Product extends Model
         'photo',
         'price',
         'stock',
+        'description',
         'about',
+        'is_available',
         'category_id',
     ];
 
     public function category() : BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function cart() : HasMany
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function transaction_details() : HasMany
+    {
+        return $this->hasMany(TransactionDetail::class);
     }
 
     public function setNameAttribute($value)

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProductTransaction extends Model
 {
@@ -20,6 +21,8 @@ class ProductTransaction extends Model
         'sub_total_amount',
         'user_id',
         'promo_code_id',
+        'transaction_details_id',
+        'payment_id'
     ];
 
     public function user() : BelongsTo 
@@ -31,5 +34,17 @@ class ProductTransaction extends Model
     {
         return $this->belongsTo(PromoCode::class, 'promo_code_id');
     }
+
+    public function payment() : BelongsTo 
+    {
+        return $this->belongsTo(Payment::class, 'payment_id');
+    }
+
+    public function transaction_details() : HasMany 
+    {
+        return $this->hasMany(TransactionDetail::class, 'transaction_details_id');
+    }
+
+
 }
 

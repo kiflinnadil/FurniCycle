@@ -19,6 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('price');
             $table->unsignedBigInteger('stock');
             $table->text('about');
+            $table->text('description');
+            $table->boolean('is_available');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
