@@ -9,7 +9,6 @@
             </a>
         </div>
 
-        <!-- Tabel Produk -->
         <div class="overflow-x-auto mt-6">
             <table class="min-w-full bg-white table-auto border-collapse border border-gray-200 rounded-lg shadow-md">
                 <thead class="bg-gray-50">
@@ -34,15 +33,23 @@
                         <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">
                             <img src="{{ url('storage/'.$product->photo) }}" alt="{{ $product->name }}" class="w-20 h-20 object-cover rounded-md">
                         </td>
-                        <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">
-                            {{-- <a href="{{ route('products.edit', $product->id) }}" class="text-green-500 hover:text-green-700">Ubah</a> --}}
-                            {{-- <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="inline-block"> --}}
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-green-600 transition duration-200">Edit</button>
-                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-red-600 transition duration-200">Hapus</button>
-                            </form>
+                        <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200 h-full">
+                            <div class="flex justify-start items-center space-x-2 h-full">
+                                <a href="{{ route('products.edit', $product->id) }}">
+                                    <button type="button" class="bg-green-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-green-600 transition duration-200">
+                                        Edit
+                                    </button>
+                                </a>
+                        
+                                <x-danger-button
+                                    x-data=""
+                                    x-on:click.prevent="$dispatch('open-modal', 'confirm-product-deletion-{{ $product->id }}')"
+                                >
+                                    {{ __('Delete') }}
+                                </x-danger-button>
+                            </div>
                         </td>
+                        
                     </tr>
                     @endforeach
                 </tbody>
@@ -50,9 +57,9 @@
         </div>
     </div>
 
-    {{-- @foreach ($products as $prodcut)
-    <x-modal name="confirm-category-deletion-{{ $product->id }}" focusable>
-        <form method="POST" action="{{ route('categories.destroy', $product->id) }}" class="p-6">
+    @foreach ($products as $product)
+    <x-modal name="confirm-product-deletion-{{ $product->id }}" focusable>
+        <form method="POST" action="{{ route('products.destroy', $product->id) }}" class="p-6">
             @csrf
             @method('DELETE')
 
@@ -75,7 +82,7 @@
             </div>
         </form>
     </x-modal>
-    @endforeach --}}
+    @endforeach
 
 </x-app-layout>
 

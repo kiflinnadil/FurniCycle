@@ -7,11 +7,9 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
@@ -22,33 +20,28 @@
                 </div>
             
                 <nav class="mt-4 flex flex-col space-y-2">
-                    <!-- Dashboard Link -->
                 <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" 
                     class="flex items-center py-4 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded transition border-b-0
                     {{ request()->routeIs('dashboard') ? 'bg-gray-700 text-white' : '' }}">
                     <span class="material-icons text-gray-900 text-white">{{ __('Dashboard') }}</span>
                 </x-nav-link>
 
-                <!-- Products Link -->
                 <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')" 
                     class="flex items-center py-4 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded transition border-b-0
                     {{ request()->routeIs('products.index') ? 'bg-gray-700 text-white' : '' }}">
                     <span class="material-icons text-gray-900 text-white">{{ __('Product') }}</span>
                 </x-nav-link>
 
-                {{-- Category --}}
                 <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.index')" 
                     class="flex items-center py-4 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded transition border-b-0
                     {{ request()->routeIs('categories.index') ? 'bg-gray-700 text-white' : '' }}">
                     <span class="material-icons text-gray-900 text-white">{{ __('Category') }}</span>
                 </x-nav-link>
             
-                    <!-- History Link (Vertically stacked below) -->
                     <a href="#" class="flex items-center py-4 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded transition">
                         <span class="material-icons text-gray-400">history</span>
                     </a>
             
-                    <!-- Logout Link (Vertically stacked below) -->
                     <a href="#" class="flex items-center py-4 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded transition">
                         <span class="material-icons text-gray-400">logout</span>
                     </a>

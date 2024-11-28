@@ -39,6 +39,7 @@ class CategoryController extends Controller
         ]);
     
         // Membuat kategori baru dan menyimpan ke dalam database
+
         $category = new Category();
         $category->name = $request->input('name');
         $category->slug = $request->input('slug');
@@ -95,6 +96,6 @@ class CategoryController extends Controller
         //
         $category->delete();
 
-    return redirect()->route('categories.index')->with('success', 'Kategori berhasil dihapus!');
+        return redirect()->route('categories.index')->with('success', 'Kategori berhasil dihapus!');
     }
 }

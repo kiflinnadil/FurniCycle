@@ -22,8 +22,8 @@ Route::middleware('auth')->group(function () {
     Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('products/store', [ProductController::class, 'store'])->name('products.store');
     Route::get('products/edit/{product}', [ProductController::class, 'edit'])->name('products.edit');
-    Route::get('products/update/{product}', [ProductController::class, 'update'])->name('products.update');
-    Route::get('products/destroy/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+    Route::put('products/update/{product}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('products/destroy/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
     
     Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('categories/create', [CategoryController::class, 'create'])->name('categories.create');

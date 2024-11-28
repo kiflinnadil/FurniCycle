@@ -1,61 +1,95 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-6">
-        <div class="flex items-center justify-between mt-8">
-            <h2 class="font-semibold text-2xl text-gray-700">Tambah Produk</h2>
-        </div>
-    </div>
-    <br>
+        <h2 class="font-semibold text-2xl text-gray-700 mb-6">Tambah Produk</h2>
 
-    <div class="mt-4">
-        <form method="POST" action="{{route('products.store')}}">
-            @csrf
-            <div>
-                <x-input-label for="name" :value="__('Name')" />
-                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required />
-                <x-input-error :messages="$errors->get('name')" class="mt-2" />
-            </div>
-            <div>
-                <x-input-label for="photo" :value="__('Photo')" />
-                <x-text-input id="photo" class="block mt-1 w-full" type="text" name="photo" :value="old('photo')" required />
-                <x-input-error :messages="$errors->get('photo')" class="mt-2" />
-            </div>
-            <div>
-                <x-input-label for="price" :value="__('Price')" />
-                <x-text-input id="price" class="block mt-1 w-full" type="text" name="price" :value="old('price')" required />
-                <x-input-error :messages="$errors->get('price')" class="mt-2" />
-            </div>
-            <div>
-                <x-input-label for="stock" :value="__('Stock')" />
-                <x-text-input id="stock" class="block mt-1 w-full" type="text" name="stock" :value="old('stock')" required />
-                <x-input-error :messages="$errors->get('stock')" class="mt-2" />
-            </div>
-            <div>
-                <x-input-label for="description" :value="__('Description')" />
-                <x-text-input id="description" class="block mt-1 w-full" type="text" name="description" :value="old('description')" required />
-                <x-input-error :messages="$errors->get('description')" class="mt-2" />
-            </div>
-            <div>
-                <x-input-label for="is_available" :value="__('Is Available')" />
-                <select id="is_available" name="is_available" class="block mt-1 w-full" required>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                </select>
-                <x-input-error :messages="$errors->get('is_available')" class="mt-2" />
-            </div>
+        <div class="flex flex-col lg:flex-row gap-8">
             
-            <div>
-                <x-input-label for="category_id" :value="__('Category')" />
-                <select id="category_id" name="category_id" class="block mt-1 w-full" required>
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
-                </select>
-                <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
+            <div class="flex justify-center mt-5 w-full lg:w-1/3">
+                <div class="bg-gray-100 w-full h-64 flex items-center justify-center border rounded-lg">
+                    <img id="imagePreview" src="/path/to/placeholder-image.jpg" alt="Image Preview" class="object-cover h-full max-w-full rounded-lg">
+                </div>
             </div>
-                        
-            <x-primary-button class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus:ring-blue-500">
-                {{ __('Submit') }}
-            </x-primary-button>
-        </form>
+
+            <div class="w-full lg:w-2/3">
+                <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
+                    @csrf
+
+                    <div class="mb-4">
+                        <x-input-label for="name" :value="__('Nama')" />
+                        <x-text-input id="name" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:ring focus:ring-blue-200 focus:border-blue-500" 
+                                    type="text" name="name" :value="old('name')" required />
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                    </div>
+
+                    <div class="mb-4">
+                        <x-input-label for="slug" :value="__('Slug')" />
+                        <x-text-input id="slug" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:ring focus:ring-blue-200 focus:border-blue-500" 
+                                    type="text" name="slug" :value="old('slug')" required />
+                        <x-input-error :messages="$errors->get('slug')" class="mt-2" />
+                    </div>
+
+                    <div class="mb-4">
+                        <x-input-label for="photo" :value="__('Foto')" />
+                        <input id="photo" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:ring focus:ring-blue-200 focus:border-blue-500" 
+                            type="file" accept="image/*" name="photo" onchange="previewImage(event)" required />
+                        <x-input-error :messages="$errors->get('photo')" class="mt-2" />
+                    </div>
+
+                    <div class="mb-4">
+                        <x-input-label for="price" :value="__('Harga')" />
+                        <x-text-input id="price" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:ring focus:ring-blue-200 focus:border-blue-500" 
+                                    type="text" name="price" :value="old('price')" required />
+                        <x-input-error :messages="$errors->get('price')" class="mt-2" />
+                    </div>
+
+                    <div class="mb-4">
+                        <x-input-label for="stock" :value="__('Stok')" />
+                        <x-text-input id="stock" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:ring focus:ring-blue-200 focus:border-blue-500" 
+                                    type="number" name="stock" :value="old('stock')" required />
+                        <x-input-error :messages="$errors->get('stock')" class="mt-2" />
+                    </div>
+
+                    <div class="mb-4">
+                        <x-input-label for="about" :value="__('Tentang')" />
+                        <x-text-input id="about" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:ring focus:ring-blue-200 focus:border-blue-500" 
+                                    type="text" name="about" :value="old('about')" required />
+                        <x-input-error :messages="$errors->get('about')" class="mt-2" />
+                    </div>
+
+                    <div class="mb-4">
+                        <x-input-label for="description" :value="__('Deskripsi')" />
+                        <textarea id="description" name="description" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:ring focus:ring-blue-200 focus:border-blue-500" 
+                                required>{{ old('description') }}</textarea>
+                        <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                    </div>
+
+                    <div class="mb-4">
+                        <x-input-label for="is_available" :value="__('Tersedia')" />
+                        <select id="is_available" name="is_available" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:ring focus:ring-blue-200 focus:border-blue-500" required>
+                            <option value="1" {{ old('is_available') == 1 ? 'selected' : '' }}>Ya</option>
+                            <option value="0" {{ old('is_available') == 0 ? 'selected' : '' }}>Tidak</option>
+                        </select>
+                        <x-input-error :messages="$errors->get('is_available')" class="mt-2" />
+                    </div>
+
+                    <div class="mb-4">
+                        <x-input-label for="category_id" :value="__('Kategori')" />
+                        <select id="category_id" name="category_id" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:ring focus:ring-blue-200 focus:border-blue-500" required>
+                            <option value="" disabled selected>Pilih kategori</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                        <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
+                    </div>
+
+                    <div class="flex justify-end">
+                        <x-primary-button class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus:ring focus:ring-blue-200">
+                            {{ __('Submit') }}
+                        </x-primary-button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </x-app-layout>
