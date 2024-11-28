@@ -16,7 +16,6 @@
 </head>
 <body>
     @include('components.navbar')
-    @include('components.header')
     <div class="my-10 mx-20">
         @yield('content')
     </div>

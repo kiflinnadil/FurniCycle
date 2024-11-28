@@ -18,9 +18,24 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('products/store', [ProductController::class, 'store'])->name('products.store');
+    Route::get('products/edit/{product}', [ProductController::class, 'edit'])->name('products.edit');
+    Route::get('products/update/{product}', [ProductController::class, 'update'])->name('products.update');
+    Route::get('products/destroy/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+    
+    Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('categories/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::post('categories/store', [CategoryController::class, 'store'])->name('categories.store');
+    Route::get('categories/edit/{category}', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('categories/update/{category}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('categories/destroy/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
     Route::prefix('admin')->name('admin.')->group(function(){
         Route::resource('products', ProductController::class)->middleware('role:owner'); //tidak perlu menambahkan route crud 1/1 cukup pakai resource 
         Route::resource('categories', CategoryController::class)->middleware('role:owner'); //tidak perlu menambahkan route crud 1/1 cukup pakai resource 
+
     });
 });
 

@@ -13,6 +13,8 @@ class CategoryController extends Controller
     public function index()
     {
         //
+        $categories = Category::all();
+        return view ('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -21,6 +23,7 @@ class CategoryController extends Controller
     public function create()
     {
         //
+        return view ('admin.categories.create');
     }
 
     /**
@@ -29,6 +32,21 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required',
+            'slug' => 'required|string|unique:categories,slug|',
+            'icon' => 'required',
+        ]);
+    
+        // Membuat kategori baru dan menyimpan ke dalam database
+        $category = new Category();
+        $category->name = $request->input('name');
+        $category->slug = $request->input('slug');
+        $category->icon = $request->input('icon');
+        $category->save();
+    
+        // Redirect atau kembali ke halaman kategori dengan pesan sukses
+        return redirect()->route('categories.index')->with('success', 'Kategori berhasil ditambahkan!');
     }
 
     /**
@@ -45,6 +63,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         //
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -53,6 +72,19 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|unique:categories,slug,' . $category->id . '|max:255',
+            'icon' => 'required|string|max:255',
+        ]);
+    
+        $category->update([
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'icon' => $request->icon,
+        ]);
+    
+        return redirect()->route('categories.index')->with('success', 'Kategori berhasil diperbarui!');
     }
 
     /**
@@ -61,5 +93,8 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+        $category->delete();
+
+    return redirect()->route('categories.index')->with('success', 'Kategori berhasil dihapus!');
     }
 }

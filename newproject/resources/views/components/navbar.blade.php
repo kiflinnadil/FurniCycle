@@ -46,16 +46,10 @@
     
         <!-- Login & Register -->
         <div class="top-right links" style="position: absolute; top: 15px; right: 0px; display: flex; gap: 3px; align-items: center;">
-            @if (Route::has('login'))
-                @auth
-                    <a href="{{ url('/home') }}">Home</a>
-                @else
                     <a class="font-sans font-medium" href="{{ route('login') }}">Login</a>
                     @if (Route::has('register'))
                         {{-- <a href="{{ route('register') }}">Register</a> --}}
                     @endif
-                @endauth
-            @endif
         </div>
     </div>          
 
