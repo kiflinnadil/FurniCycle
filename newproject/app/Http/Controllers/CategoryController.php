@@ -74,9 +74,9 @@ class CategoryController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required',
             'slug' => 'required|string|unique:categories,slug,' . $category->id . '|max:255',
-            'icon' => 'required|string|max:255',
+            'icon' => 'required',
         ]);
     
         $category->update([

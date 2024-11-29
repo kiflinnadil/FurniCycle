@@ -13,6 +13,8 @@ class PromoCodeController extends Controller
     public function index()
     {
         //
+        $promo_codes = PromoCode::all();
+        return view ('admin.promo_codes.index', compact('promo_codes'));
     }
 
     /**
@@ -21,6 +23,7 @@ class PromoCodeController extends Controller
     public function create()
     {
         //
+        return view ('admin.promo_codes.create');
     }
 
     /**
@@ -29,6 +32,17 @@ class PromoCodeController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'code' => 'required|unique:promo_codes,code',
+            'discount_amount' => 'required|numeric|',
+        ]);
+
+        PromoCode::create([
+            'code' => $request->code,
+            'discount_amount' => $request->discount_amount
+        ]);
+
+        return redirect()->route('promo_codes.index')->with('success', 'Promo Code berhasil ditambahkan!');
     }
 
     /**
@@ -45,6 +59,7 @@ class PromoCodeController extends Controller
     public function edit(PromoCode $promoCode)
     {
         //
+        return view('admin.promo_codes.edit', compact('promoCode'));
     }
 
     /**
@@ -53,6 +68,17 @@ class PromoCodeController extends Controller
     public function update(Request $request, PromoCode $promoCode)
     {
         //
+        $request->validate([
+            'code' => 'required|unique:promo_codes,code',
+            'discount_amount' => 'required|numeric|',
+        ]);
+
+        $promoCode->update([
+            'code' => $request->code,
+            'discount_amount' => $request->discount_amount
+        ]);
+
+        return redirect()->route('promo_codes.index')->with('success', 'Promo Code berhasil diperbarui!');
     }
 
     /**
@@ -61,5 +87,8 @@ class PromoCodeController extends Controller
     public function destroy(PromoCode $promoCode)
     {
         //
+        $promoCode->delete();
+
+        return redirect()->route('promo_codes.index')->with('success', 'Promo Code berhasil dihapus!'); 
     }
 }

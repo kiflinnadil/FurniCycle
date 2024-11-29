@@ -37,11 +37,13 @@
                     {{ request()->routeIs('categories.index') ? 'bg-gray-700 text-white' : '' }}">
                     <span class="material-icons text-gray-900 text-white">{{ __('Category') }}</span>
                 </x-nav-link>
-            
-                    <a href="#" class="flex items-center py-4 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded transition">
-                        <span class="material-icons text-gray-400">history</span>
-                    </a>
-            
+
+                <x-nav-link :href="route('promo_codes.index')" :active="request()->routeIs('promo_codes.index')" 
+                    class="flex items-center py-4 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded transition border-b-0
+                    {{ request()->routeIs('promo_codes.index') ? 'bg-gray-700 text-white' : '' }}">
+                    <span class="material-icons text-gray-900 text-white">{{ __('Promo Code') }}</span>
+                </x-nav-link>
+
                     <a href="#" class="flex items-center py-4 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded transition">
                         <span class="material-icons text-gray-400">logout</span>
                     </a>

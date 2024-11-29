@@ -1,5 +1,9 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-6">
+        
+        @if (session()->has('success'))
+        <x-alert message="{{ session('success') }}"></x-alert>
+        @endif
 
         <div class="flex items-center justify-between mt-8">
             <h2 class="font-semibold text-2xl text-gray-700">List Produk</h2>

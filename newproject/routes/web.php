@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PromoCodeController;
 
 Route::get('/', function () {
     return view('home');
@@ -31,6 +32,13 @@ Route::middleware('auth')->group(function () {
     Route::get('categories/edit/{category}', [CategoryController::class, 'edit'])->name('categories.edit');
     Route::put('categories/update/{category}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('categories/destroy/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+    Route::get('promo_codes', [PromoCodeController::class, 'index'])->name('promo_codes.index');
+    Route::get('promo_codes/create', [PromoCodeController::class, 'create'])->name('promo_codes.create');
+    Route::post('promo_codes/store', [PromoCodeController::class, 'store'])->name('promo_codes.store');
+    Route::get('promo_codes/edit/{promoCode}', [PromoCodeController::class, 'edit'])->name('promo_codes.edit');
+    Route::put('promo_codes/update/{promoCode}', [PromoCodeController::class, 'update'])->name('promo_codes.update');
+    Route::delete('promo_codes/destroy/{promoCode}', [PromoCodeController::class, 'destroy'])->name('promo_codes.destroy');
 
     Route::prefix('admin')->name('admin.')->group(function(){
         Route::resource('products', ProductController::class)->middleware('role:owner'); //tidak perlu menambahkan route crud 1/1 cukup pakai resource 
