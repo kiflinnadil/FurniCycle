@@ -24,13 +24,6 @@
                     </div>
 
                     <div class="mb-4">
-                        <x-input-label for="slug" :value="__('Slug')" />
-                        <x-text-input id="slug" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:ring focus:ring-blue-200 focus:border-blue-500" 
-                                    type="text" name="slug" value="{{ $product->slug }}" required />
-                        <x-input-error :messages="$errors->get('slug')" class="mt-2" />
-                    </div>
-
-                    <div class="mb-4">
                         <x-input-label for="photo" :value="__('Foto')" />
                         <input id="photo" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:ring focus:ring-blue-200 focus:border-blue-500" 
                             type="file" accept="image/*" name="photo" onchange="previewImage(event)" />
@@ -49,13 +42,6 @@
                         <x-text-input id="stock" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:ring focus:ring-blue-200 focus:border-blue-500" 
                                     type="number" name="stock" value="{{ $product->stock }}" required />
                         <x-input-error :messages="$errors->get('stock')" class="mt-2" />
-                    </div>
-
-                    <div class="mb-4">
-                        <x-input-label for="about" :value="__('Tentang')" />
-                        <x-text-input id="about" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:ring focus:ring-blue-200 focus:border-blue-500" 
-                                    type="text" name="about" value="{{ $product->about }}" required />
-                        <x-input-error :messages="$errors->get('about')" class="mt-2" />
                     </div>
 
                     <div class="mb-4">
@@ -95,4 +81,24 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function previewImage(event) {
+            const input = event.target;
+            const preview = document.getElementById('imagePreview');
+    
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+    
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                };
+    
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.src = '/path/to/placeholder-image.jpg'; // Jika input kosong, kembali ke placeholder
+            }
+        }
+    </script>
+    
 </x-app-layout>

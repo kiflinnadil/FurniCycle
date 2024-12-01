@@ -14,8 +14,7 @@ class Payment extends Model
 
     protected $fillable = [
         'payment_method',
-        'amount',
-        'payment_status'
+        'no_rekening'
     ];
 
     public function product_transaction_id() : HasMany

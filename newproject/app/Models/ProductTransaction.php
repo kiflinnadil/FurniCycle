@@ -24,7 +24,6 @@ class ProductTransaction extends Model
         'sub_total_amount',
         'user_id',
         'promo_code_id',
-        'transaction_details_id',
         'payment_id'
     ];
 
@@ -43,9 +42,9 @@ class ProductTransaction extends Model
         return $this->belongsTo(Payment::class, 'payment_id');
     }
 
-    public function transaction_details() : HasMany 
+    public function transaction_detail() : HasMany 
     {
-        return $this->hasMany(TransactionDetail::class, 'transaction_details_id');
+        return $this->hasMany(TransactionDetail::class, 'transaction_detail_id');
     }
 
 

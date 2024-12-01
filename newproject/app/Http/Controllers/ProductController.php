@@ -34,31 +34,30 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'slug' => 'required|string|unique:products,slug',
-            'photo' => 'required',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
-            'about' => 'required',
+            'photo' => 'required|file|',
+            'price' => 'required|numeric|',
+            'stock' => 'required|integer|',
             'description' => 'required',
             'is_available' => 'required|boolean',
             'category_id' => 'required|exists:categories,id'
-        ]);        
-    
-        // Membuat product baru dan menyimpan ke dalam database
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('uploads', $filename, 'public');
+        }
+
         Product::create([
             'name' => $request->name,
-            'slug' => $request->slug,
-            'photo' => $request->photo,
+            'photo' => 'uploads/' . $filename,
             'price' => $request->price,
             'stock' => $request->stock,
-            'stock' => $request->stock,
-            'about' => $request->about,
             'description' => $request->description,
             'is_available' => $request->is_available,
             'category_id' => $request->category_id,
         ]);
     
-        // Redirect atau kembali ke halaman kategori dengan pesan sukses
         return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan!');
     }
 
@@ -88,11 +87,9 @@ class ProductController extends Controller
         //
         $request->validate([
             'name' => 'required',
-            'slug' => 'required|string|unique:categories,slug,' . $product->id . '|max:255',
-            'photo' => 'required',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
-            'about' => 'required',
+            'photo' => 'required|image|',
+            'price' => 'required|numeric|',
+            'stock' => 'required|integer|',
             'description' => 'required',
             'is_available' => 'required|boolean',
             'category_id' => 'required|exists:categories,id',
@@ -100,11 +97,9 @@ class ProductController extends Controller
     
         $product->update([
             'name' => $request->name,
-            'slug' => $request->slug,
             'photo' => $request->photo,
             'price' => $request->price,
             'stock' => $request->stock,
-            'about' => $request->about,
             'description' => $request->description,
             'is_available' => $request->is_available,
             'category_id' => $request->category_id,

@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-6">
-        
+
         @if (session()->has('success'))
         <x-alert message="{{ session('success') }}"></x-alert>
         @endif
@@ -35,8 +35,9 @@
                         <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ Str::limit($product->description, 50) }}</td>
                         <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">Rp {{ number_format($product->price, 0, ',') }}</td>
                         <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">
-                            <img src="{{ url('storage/'.$product->photo) }}" alt="{{ $product->name }}" class="w-20 h-20 object-cover rounded-md">
-                        </td>
+                            <img src="{{ asset('storage/'.$product->photo) }}" alt="{{ $product->name }}" class="w-20 h-20 object-cover rounded-md">
+                        </td> 
+
                         <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200 h-full">
                             <div class="flex justify-start items-center space-x-2 h-full">
                                 <a href="{{ route('products.edit', $product->id) }}">

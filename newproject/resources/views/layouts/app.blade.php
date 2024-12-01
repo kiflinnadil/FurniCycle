@@ -6,7 +6,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
-
+        
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs" defer></script>
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
@@ -44,9 +45,12 @@
                     <span class="material-icons text-gray-900 text-white">{{ __('Promo Code') }}</span>
                 </x-nav-link>
 
-                    <a href="#" class="flex items-center py-4 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded transition">
-                        <span class="material-icons text-gray-400">logout</span>
-                    </a>
+                <x-nav-link :href="route('payments.index')" :active="request()->routeIs('payments.index')" 
+                    class="flex items-center py-4 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded transition border-b-0
+                    {{ request()->routeIs('payments.index') ? 'bg-gray-700 text-white' : '' }}">
+                    <span class="material-icons text-gray-900 text-white">{{ __('Payment') }}</span>
+                </x-nav-link>
+
                 </nav>
             </aside>            
 

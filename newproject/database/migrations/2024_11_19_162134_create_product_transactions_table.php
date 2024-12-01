@@ -22,7 +22,6 @@ return new class extends Migration
             $table->boolean('is_paid');
             $table->unsignedBigInteger('quantity');
             $table->unsignedBigInteger('sub_total_amount');
-            $table->unsignedBigInteger('total_amount');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('payment_id')->constrained()->onDelete('cascade');
             $table->foreignId('promo_code_id')->nullable()->constrained()->onDelete('cascade');

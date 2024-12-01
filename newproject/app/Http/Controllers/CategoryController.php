@@ -34,7 +34,6 @@ class CategoryController extends Controller
         //
         $request->validate([
             'name' => 'required',
-            'slug' => 'required|string|unique:categories,slug|',
             'icon' => 'required',
         ]);
     
@@ -42,7 +41,6 @@ class CategoryController extends Controller
 
         $category = new Category();
         $category->name = $request->input('name');
-        $category->slug = $request->input('slug');
         $category->icon = $request->input('icon');
         $category->save();
     
@@ -75,13 +73,11 @@ class CategoryController extends Controller
         //
         $request->validate([
             'name' => 'required',
-            'slug' => 'required|string|unique:categories,slug,' . $category->id . '|max:255',
             'icon' => 'required',
         ]);
     
         $category->update([
             'name' => $request->name,
-            'slug' => $request->slug,
             'icon' => $request->icon,
         ]);
     

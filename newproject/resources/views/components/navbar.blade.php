@@ -55,7 +55,6 @@
 
     </div>
 
-    
 
         <!-- Profile dropdown -->
         <div class="relative ml-3">

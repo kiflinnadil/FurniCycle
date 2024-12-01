@@ -14,11 +14,9 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug');
             $table->string('photo');
             $table->unsignedBigInteger('price');
             $table->unsignedBigInteger('stock');
-            $table->text('about');
             $table->text('description');
             $table->boolean('is_available');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');

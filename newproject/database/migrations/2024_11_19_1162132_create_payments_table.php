@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('payment_method');
-            $table->unsignedBigInteger('amount');
-            $table->boolean('payment_status');
+            $table->string('no_rekening');
             $table->timestamps();
         });
     }

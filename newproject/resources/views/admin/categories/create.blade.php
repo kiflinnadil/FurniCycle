@@ -17,13 +17,6 @@
             </div>
 
             <div class="mb-4">
-                <x-input-label for="slug" :value="__('Slug')" />
-                <x-text-input id="slug" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" 
-                    type="text" name="slug" :value="old('slug')" required />
-                <x-input-error :messages="$errors->get('slug')" class="mt-2" />
-            </div>
-
-            <div class="mb-4">
                 <x-input-label for="icon" :value="__('Ikon (Opsional)')" />
                 <x-text-input id="icon" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" 
                     type="text" name="icon" :value="old('icon')" />
