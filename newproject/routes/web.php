@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PromoCodeController;
+use App\Http\Controllers\ProductTransactionController;
 
 Route::get('/', function () {
     return view('home');
@@ -55,11 +56,22 @@ Route::middleware('auth')->group(function () {
         Route::get('promo_codes/edit/{promoCode}', [PromoCodeController::class, 'edit'])->name('promo_codes.edit');
         Route::put('promo_codes/update/{promoCode}', [PromoCodeController::class, 'update'])->name('promo_codes.update');
         Route::delete('promo_codes/destroy/{promoCode}', [PromoCodeController::class, 'destroy'])->name('promo_codes.destroy');
+
+        // Transaksi
+        Route::get('admin/transactions', [ProductTransactionController::class, 'index'])->name('admin.transactions.index');
+        Route::post('admin/transactions/{id}/confirm', [ProductTransactionController::class, 'confirm'])->name('admin.transactions.confirm');
+        
     });
+
 
     // Routes khusus untuk pelanggan (Buyer)
     Route::middleware(['role:buyer'])->group(function () {
-        // Orders (contoh rute untuk pelanggan)
+
+        
+        // Route::get('transactions', [ProductTransactionController::class, 'index'])->name('transactions.index'); // Melihat daftar transaksi user
+        // Route::get('transactions/create', [ProductTransactionController::class, 'create'])->name('transactions.create'); // Form transaksi baru
+        // Route::post('transactions', [ProductTransactionController::class, 'store'])->name('transactions.store'); // Simpan transaksi
+        // // Orders (contoh rute untuk pelanggan)
         // Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
         // Route::post('/orders/store', [OrderController::class, 'store'])->name('orders.store');
         // Route::get('/orders/show/{order}', [OrderController::class, 'show'])->name('orders.show');
@@ -68,18 +80,14 @@ Route::middleware('auth')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function(){
         Route::resource('products', ProductController::class)->middleware('role:owner'); //tidak perlu menambahkan route crud 1/1 cukup pakai resource 
         Route::resource('categories', CategoryController::class)->middleware('role:owner'); //tidak perlu menambahkan route crud 1/1 cukup pakai resource 
-
+        
     });
+    
 });
 
 require __DIR__.'/auth.php';
 
-Route::get('/shop', function () {
-    return view('shop', 
-    ['judul' => 'Harry Potter'],
-    ['isi' => 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium dolor aperiam voluptatibus consectetur esse obcaecati sunt laboriosam ab labore voluptatem, doloremque, similique quae, fuga et tenetur laborum veritatis laudantium omnis.
-    ']);
-});
+Route::get('/shop', [ProductController::class, 'index'])->name('shop.index');
 
 Route::get('/about', function () {
     return view('about');
