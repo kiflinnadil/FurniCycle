@@ -16,8 +16,8 @@ class ProductController extends Controller
         $products = Product::all();
         return view ('admin.products.index', compact('products'));
 
-        $products = Product::all();
-        return view ('profile.shop', compact('products'));
+        // $products = Product::all();
+        // return view ('profile.shop', compact('products'));
     }
 
     /**
