@@ -57,7 +57,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('promo_codes/destroy/{promoCode}', [PromoCodeController::class, 'destroy'])->name('promo_codes.destroy');
     });
 
-    // Routes khusus untuk pelanggan (Buyer)
     Route::middleware(['role:buyer'])->group(function () {
         // Orders (contoh rute untuk pelanggan)
         // Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
@@ -65,21 +64,16 @@ Route::middleware('auth')->group(function () {
         // Route::get('/orders/show/{order}', [OrderController::class, 'show'])->name('orders.show');
     });
     
-    Route::prefix('admin')->name('admin.')->group(function(){
-        Route::resource('products', ProductController::class)->middleware('role:owner'); //tidak perlu menambahkan route crud 1/1 cukup pakai resource 
-        Route::resource('categories', CategoryController::class)->middleware('role:owner'); //tidak perlu menambahkan route crud 1/1 cukup pakai resource 
+    // Route::prefix('admin')->name('admin.')->group(function(){
+    //     Route::resource('products', ProductController::class)->middleware('role:owner'); //tidak perlu menambahkan route crud 1/1 cukup pakai resource 
+    //     Route::resource('categories', CategoryController::class)->middleware('role:owner'); //tidak perlu menambahkan route crud 1/1 cukup pakai resource 
 
-    });
+    // });
 });
 
 require __DIR__.'/auth.php';
 
-Route::get('/shop', function () {
-    return view('shop', 
-    ['judul' => 'Harry Potter'],
-    ['isi' => 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium dolor aperiam voluptatibus consectetur esse obcaecati sunt laboriosam ab labore voluptatem, doloremque, similique quae, fuga et tenetur laborum veritatis laudantium omnis.
-    ']);
-});
+Route::get('/shop', [ProductController::class, 'userIndex'])->name('shop');
 
 Route::get('/about', function () {
     return view('about');

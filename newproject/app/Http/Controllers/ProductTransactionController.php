@@ -13,15 +13,15 @@ class ProductTransactionController extends Controller
     public function index(Request $request)
     {
         //
-        if ($request->user()->hasRole('admin')) {
+        if ($request->user()->role('owner')) {
             // Admin melihat semua transaksi yang belum dikonfirmasi
             $transactions = ProductTransaction::where('is_paid', false)->latest()->get();
-            return view('admin.transactions.index', compact('transactions'));
+            return view('admin.product_transactions.index', compact('product_transactions'));
         }
 
         // Jika user adalah pelanggan
         $transactions = ProductTransaction::where('user_id', $request->user()->id)->latest()->get();
-        return view('transactions.index', compact('transactions'));
+        return view('product_transactions.index', compact('product_transactions'));
     }
 
     /**

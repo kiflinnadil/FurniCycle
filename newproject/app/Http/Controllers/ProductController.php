@@ -15,9 +15,12 @@ class ProductController extends Controller
     {
         $products = Product::all();
         return view ('admin.products.index', compact('products'));
+    }
 
-        // $products = Product::all();
-        // return view ('profile.shop', compact('products'));
+    public function userIndex()
+    {
+        $products = Product::all();
+        return view ('shop', compact('products'));
     }
 
     /**
@@ -28,7 +31,6 @@ class ProductController extends Controller
         $categories = Category::all(); // Mengambil semua kategori
         return view('admin.products.create', compact('categories'));
     }
-
 
     /**
      * Store a newly created resource in storage.
