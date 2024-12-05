@@ -56,6 +56,11 @@ Route::middleware('auth')->group(function () {
         Route::get('promo_codes/edit/{promoCode}', [PromoCodeController::class, 'edit'])->name('promo_codes.edit');
         Route::put('promo_codes/update/{promoCode}', [PromoCodeController::class, 'update'])->name('promo_codes.update');
         Route::delete('promo_codes/destroy/{promoCode}', [PromoCodeController::class, 'destroy'])->name('promo_codes.destroy');
+
+
+        Route::get('/product-transactions', [ProductTransactionController::class, 'index'])->name('product_transactions.index');
+
+
     });
 //
     Route::middleware(['role:buyer'])->group(function () {
@@ -66,12 +71,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/checkout/{productId}', [ProductTransactionController::class, 'checkout'])->name('transactions.checkout');
         Route::post('/checkout', [ProductTransactionController::class, 'store'])->name('transactions.store');
     });
-//    
-    // Route::prefix('admin')->name('admin.')->group(function(){
-    //     Route::resource('products', ProductController::class)->middleware('role:owner'); //tidak perlu menambahkan route crud 1/1 cukup pakai resource 
-    //     Route::resource('categories', CategoryController::class)->middleware('role:owner'); //tidak perlu menambahkan route crud 1/1 cukup pakai resource 
 
-    // });
 });
 
 require __DIR__.'/auth.php';
