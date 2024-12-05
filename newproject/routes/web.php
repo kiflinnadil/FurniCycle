@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PromoCodeController;
+use App\Http\Controllers\ProductTransactionController;
 
 Route::get('/', function () {
     return view('home');
@@ -56,14 +57,16 @@ Route::middleware('auth')->group(function () {
         Route::put('promo_codes/update/{promoCode}', [PromoCodeController::class, 'update'])->name('promo_codes.update');
         Route::delete('promo_codes/destroy/{promoCode}', [PromoCodeController::class, 'destroy'])->name('promo_codes.destroy');
     });
-
+//
     Route::middleware(['role:buyer'])->group(function () {
-        // Orders (contoh rute untuk pelanggan)
-        // Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-        // Route::post('/orders/store', [OrderController::class, 'store'])->name('orders.store');
-        // Route::get('/orders/show/{order}', [OrderController::class, 'show'])->name('orders.show');
+        // Route::get('product_transaction', [ProductTransactionController::class, 'index'])->name('transactions.index');
+        // Route::get('product_transaction/create', [ProductTransactionController::class, 'create'])->name('transactions.create');
+        // Route::post('product_transaction/store', [ProductTransactionController::class, 'store'])->name('transactions.store');
+        // Route::get('product_transaction/{transaction}', [ProductTransactionController::class, 'show'])->name('transactions.show');
+        Route::get('/checkout/{productId}', [ProductTransactionController::class, 'checkout'])->name('transactions.checkout');
+        Route::post('/checkout', [ProductTransactionController::class, 'store'])->name('transactions.store');
     });
-    
+//    
     // Route::prefix('admin')->name('admin.')->group(function(){
     //     Route::resource('products', ProductController::class)->middleware('role:owner'); //tidak perlu menambahkan route crud 1/1 cukup pakai resource 
     //     Route::resource('categories', CategoryController::class)->middleware('role:owner'); //tidak perlu menambahkan route crud 1/1 cukup pakai resource 
@@ -74,6 +77,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('/shop', [ProductController::class, 'userIndex'])->name('shop');
+Route::get('/shop/detail/{id}', [ProductController::class, 'show'])->name('shop_details');
 
 Route::get('/about', function () {
     return view('about');

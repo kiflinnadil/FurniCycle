@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProductTransaction;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\ProductTransaction;
 
 class ProductTransactionController extends Controller
 {
@@ -37,34 +38,40 @@ class ProductTransactionController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
-        $validated = $request->validate([
-            'product_name' => 'required|string',
-            'phone_number' => 'required|string',
-            'address' => 'required|string',
-            'post_code' => 'required|string',
-            'city' => 'required|string',
-            'notes' => 'nullable|string',
-            'quantity' => 'required|integer|min:1',
-            'sub_total_amount' => 'required|numeric|min:0',
-        ]);
+{
+    $validated = $request->validate([
+        'product_name' => 'required|string',
+        'phone_number' => 'required|string|max:15',
+        'address' => 'required|string|max:255',
+        'post_code' => 'required|string|max:10',
+        'city' => 'required|string|max:100',
+        'notes' => 'nullable|string',
+        'quantity' => 'required|integer|min:1',
+    ]);
 
-        ProductTransaction::create([
-            'user_id' => $request->user()->id,
-            'product_name' => $validated['product_name'],
-            'phone_number' => $validated['phone_number'],
-            'address' => $validated['address'],
-            'post_code' => $validated['post_code'],
-            'city' => $validated['city'],
-            'notes' => $validated['notes'],
-            'quantity' => $validated['quantity'],
-            'sub_total_amount' => $validated['sub_total_amount'],
-            'is_paid' => false, // Default: belum terbayar
-        ]);
+    $product = Product::findOrFail($request->product_id);
 
-        return redirect()->route('transactions.index')->with('success', 'Transaction created successfully.');
-    }
+    $totalPrice = $product->price * $validated['quantity'];
+
+    ProductTransaction::create([
+        'user_id' => $request->user()->id,
+        'product_name' => $product->name,
+        'phone_number' => $validated['phone_number'],
+        'address' => $validated['address'],
+        'post_code' => $validated['post_code'],
+        'city' => $validated['city'],
+        'notes' => $validated['notes'],
+        'quantity' => $validated['quantity'],
+        'sub_total_amount' => $totalPrice,
+        'is_paid' => false,
+    ]);
+
+    $product->update([
+        'stock' => $product->stock - $validated['quantity'],
+    ]);
+
+    return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil dibuat.');
+}
 
     public function confirm($id)
     {
@@ -73,6 +80,18 @@ class ProductTransactionController extends Controller
 
         return redirect()->route('transactions.index')->with('success', 'Transaction confirmed successfully.');
 
+    }
+
+    public function checkout($productId)
+    {
+        $product = Product::findOrFail($productId);
+
+        $quantity = $product->quantity;
+
+        return view('transaction', [
+            'product' => $product,
+            'quantity' => $quantity,
+        ]);
     }
 
     /**

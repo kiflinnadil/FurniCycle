@@ -47,7 +47,12 @@
                             class="flex items-center py-4 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded transition border-b-0">
                             <span class="material-icons text-gray-900 text-white">{{ __('Payment') }}</span>
                         </x-nav-link>
-                    </nav>
+
+                        {{-- <x-nav-link :href="route('product_transaction.index')" :active="request()->routeIs('product_transaction.index')" 
+                            class="flex items-center py-4 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded transition border-b-0">
+                            <span class="material-icons text-gray-900 text-white">{{ __('Product Transaction') }}</span>
+                        </x-nav-link>
+                    </nav> --}}
                 </aside>
             @endif
 

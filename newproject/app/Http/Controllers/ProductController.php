@@ -69,19 +69,21 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        return view('shop_details', compact('product'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit($id)
     {
-        $product = Product::findOrFail($id); // Ambil data produk berdasarkan ID
-        $categories = Category::all(); // Ambil semua kategori
-        return view('admin.products.edit', compact('product', 'categories')); // Kirim data ke view
+        $product = Product::findOrFail($id);
+        $categories = Category::all();
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     /**
