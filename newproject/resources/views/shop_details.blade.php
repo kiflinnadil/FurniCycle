@@ -3,7 +3,12 @@
 
 @section('content')
 <div x-data="{ isOpen: false, quantity: 1, price: {{ $product->price }} }">
+    <a href="/shop" style="margin-bottom: 20px; display: inline-block; text-decoration: none; color: #007bff; font-size: 18px; font-weight: bold;">
+        ← 
+    </a>
     <div class="product-details-container" style="display: flex; gap: 40px; padding: 40px; max-width: 1200px; margin: auto; font-family: 'Georgia', serif; color: #333; align-items: flex-start;">
+
+
         <div class="product-image" style="flex: 1; text-align: center; display: flex; justify-content: center; align-items: center; height: 100%; ">
             <img src="{{ asset('storage/' . $product->photo) }}" alt="{{ $product->name }}" style="max-width: 90%; height: 500px; object-fit: cover;">
         </div>
