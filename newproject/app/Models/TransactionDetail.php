@@ -8,23 +8,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TransactionDetail extends Model
 {
-    //
     use HasFactory;
 
     protected $fillable = [
-        'price',
-        'product_name',
-        'quantity',
-        'product_transaction_id',
-        'product_id'
-    ];
+    'price', 
+    'product_name', 
+    'quantity', 
+    'product_id', 
+    'product_transaction_id'
+];
 
-    public function product() : BelongsTo
+    public function product()
     {
-        return $this->belongsTo (Product::class, 'product_id');
+        return $this->belongsTo(Product::class);
     }
 
-    public function product_transaction() : BelongsTo
+    public function productTransaction()
     {
         return $this->belongsTo(ProductTransaction::class, 'product_transaction_id');
     }

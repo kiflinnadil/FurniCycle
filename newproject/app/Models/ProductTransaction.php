@@ -6,26 +6,39 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Prompts\Prompt;
 
 class ProductTransaction extends Model
 {
     //
     use HasFactory;
 
+    protected $table = 'product_transactions';
+
     protected $fillable = [
         'product_name',
+        'quantity',
         'phone_number',
         'address',
         'post_code',
         'city',
         'notes',
         'is_paid',
-        'quantity',
-        'sub_total_amount',
+        'price',
         'user_id',
         'promo_code_id',
-        'payment_id'
+        'payment_id',
     ];
+
+    public function product()
+    {
+        return $this->belongsToMany(Product::class, 'transaction_details');
+    }
+    
+    public function transactionDetails()
+    {
+        return $this->hasMany(TransactionDetail::class);
+    }
 
     public function user() : BelongsTo 
     {
@@ -41,12 +54,4 @@ class ProductTransaction extends Model
     {
         return $this->belongsTo(Payment::class, 'payment_id');
     }
-
-    public function transaction_detail() : HasMany 
-    {
-        return $this->hasMany(TransactionDetail::class, 'transaction_detail_id');
-    }
-
-
 }
-

@@ -28,7 +28,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all(); // Mengambil semua kategori
+        $categories = Category::all();
         return view('admin.products.create', compact('categories'));
     }
 

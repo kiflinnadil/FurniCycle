@@ -5,134 +5,102 @@ namespace App\Http\Controllers;
 use App\Models\Payment;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\TransactionDetail;
 use App\Models\ProductTransaction;
 use App\Models\PromoCode;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class ProductTransactionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
+    public function index()
     {
-        if ($request->user()->role('owner')) {
-            // Admin melihat semua transaksi yang belum dikonfirmasi
-            $transactions = ProductTransaction::where('is_paid', false)->latest()->get();
-            return view('admin.product_transactions.index', compact('transactions'));
-        }
-
-        // Jika user adalah pelanggan
-        $transactions = ProductTransaction::where('user_id', $request->user()->id)->latest()->get();
-        return view('product_transactions.index', compact('transactions'));
+        $products = Product::all();
+        $transactions = ProductTransaction::all();
+        return view('transactions.index', compact('transactions', 'products'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function create()
+    {
+        $payments = Payment::all();
+        $promo_codes = PromoCode::all();
+        $products = Product::where('is_available', true)->get();
+        return view('transactions.create', compact('payments', 'promo_codes', 'products'));
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'phone_number' => 'required|string|max:15',
-            'address' => 'required|string|max:255',
-            'post_code' => 'required|string|max:10',
-            'city' => 'required|string|max:100',
+            'product_name' => 'required|string',
+            'phone_number' => 'required|string',
+            'address' => 'required|string',
+            'post_code' => 'required|string',
+            'city' => 'required|string',
             'notes' => 'nullable|string',
-            'quantity' => 'required|integer|min:1',
-            'promo_code_id' => 'nullable|exists:promo_codes,id', // Add promo_code validation
-            'payment_id' => 'required|exists:payments,id', // Validate payment method
+            'is_paid' => 'required|boolean',
+            'price' => 'required|numeric',
+            'user_id' => 'required|exists:users,id',
+            'payment_id' => 'required|exists:payments,id',
+            'promo_code_id' => 'nullable|exists:promo_codes,id',
+            'products' => 'required|array',
+            'products.*.id' => 'required|exists:products,id',
+            'products.*.quantity' => 'required|integer|min:1',
         ]);
 
-        $product = Product::findOrFail($request->product_id);
+        DB::transaction(function () use ($validated) {
+            $transaction = ProductTransaction::create($validated);
 
-        // Check if promo code is applied
-        $promoCode = PromoCode::find($request->promo_code_id);
-        $discountAmount = $promoCode ? $promoCode->discount_amount : 0;
+            foreach ($validated['products'] as $productData) {
+                $product = Product::findOrFail($productData['id']);
 
-        // Calculate the total price with the discount
-        $totalPrice = $product->price * $validated['quantity'] - $discountAmount;
+                if ($product->stock < $productData['quantity']) {
+                    throw new \Exception("Insufficient stock for product {$product->name}");
+                }
 
-        // Create the transaction
-        $transaction = ProductTransaction::create([
-            'user_id' => $request->user()->id,
-            'product_name' => $product->name,
-            'phone_number' => $validated['phone_number'],
-            'address' => $validated['address'],
-            'post_code' => $validated['post_code'],
-            'city' => $validated['city'],
-            'notes' => $validated['notes'],
-            'quantity' => $validated['quantity'],
-            'sub_total_amount' => $product->price * $validated['quantity'], // Store the subtotal without discount
-            'total_amount' => $totalPrice, // Store the total after discount
-            'is_paid' => false,
-            'payment_id' => $validated['payment_id'], // Store the payment method
-            'promo_code_id' => $request->promo_code_id, // Store the promo code ID
-        ]);
+                $product->stock -= $productData['quantity'];
+                $product->save();
 
-        // Update the product stock
-        $product->update([
-            'stock' => $product->stock - $validated['quantity'],
-        ]);
+                TransactionDetail::create([
+                    'product_transaction_id' => $transaction->id,
+                    'product_id' => $product->id,
+                    'quantity' => $productData['quantity'],
+                    'price' => $product->price * $productData['quantity'],
+                    'product_name' => $product->name,
+                ]);
+            }
+        });
 
-        return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil dibuat.');
+        return redirect()->route('admin.product_transactions.index.index')->with('success', 'Transaction created successfully');
     }
 
-    /**
-     * Confirm a transaction as paid.
-     */
-    public function confirm($id)
+    public function show($id)
+    {
+        $transaction = ProductTransaction::with('transactionDetails')->findOrFail($id);
+        return view('transactions.show', compact('transaction'));
+    }
+
+    public function destroy($id)
+    {
+        $transaction = ProductTransaction::findOrFail($id);
+        $transaction->delete();
+
+        return redirect()->route('admin.product_transactions.index')->with('success', 'Transaction deleted successfully');
+    }
+
+    public function generateInvoice($id)
+    {
+        $transaction = ProductTransaction::with('transactionDetails.product')->findOrFail($id);
+
+        // Generate invoice logic (e.g., PDF generation)
+        return view('transactions.invoice', compact('transaction'));
+    }
+
+    public function markAsPaid($id)
     {
         $transaction = ProductTransaction::findOrFail($id);
         $transaction->update(['is_paid' => true]);
-
-        return redirect()->route('transactions.index')->with('success', 'Transaction confirmed successfully.');
-    }
-
-    /**
-     * Show the checkout page for a product.
-     */
-    public function checkout($productId)
-    {
-        $product = Product::findOrFail($productId);
-        $payments = Payment::all();
-        $promo_codes = PromoCode::all();
-
-        return view('buyer.transaction', [
-            'product' => $product,
-            'payments' => $payments,
-            'promo_codes' => $promo_codes
-        ]);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(ProductTransaction $productTransaction)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(ProductTransaction $productTransaction)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, ProductTransaction $productTransaction)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ProductTransaction $productTransaction)
-    {
-        //
+    
+        return redirect()->route('transactions.index')->with('success', 'Transaction marked as paid.');
     }
 }
+

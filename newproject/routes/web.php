@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
@@ -70,6 +71,8 @@ Route::middleware('auth')->group(function () {
         // Route::get('product_transaction/{transaction}', [ProductTransactionController::class, 'show'])->name('transactions.show');
         Route::get('/checkout/{productId}', [ProductTransactionController::class, 'checkout'])->name('transactions.checkout');
         Route::post('/checkout', [ProductTransactionController::class, 'store'])->name('transactions.store');
+
+        Route::post('pesan', [ProductTransactionController::class, 'pesan'])->name('pesan');
     });
 
 });

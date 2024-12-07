@@ -37,9 +37,11 @@
                 <!-- Ikon Keranjang -->
                 <div class="hidden md:block mr-8"> 
                     <button type="button" class="relative rounded-full p-2 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        <a class="nav-link" href="#">
                         <span class="absolute -inset-1.5"></span>
                         <span class="sr-only">View Cart</span>
-                        <i class="fas fa-shopping-cart text-black" style="font-size: 18px;"></i> <!-- Meningkatkan ukuran ikon -->
+                            <i class="fas fa-shopping-cart text-black" style="font-size: 18px;"></i>
+                        </a>
                     </button>
                 </div>
             

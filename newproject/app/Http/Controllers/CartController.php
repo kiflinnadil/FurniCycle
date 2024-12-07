@@ -10,9 +10,16 @@ class CartController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function __construct()
+    {
+        
+    }
+    
     public function index()
     {
         //
+        return view('carts.index');
     }
 
     /**
