@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -11,20 +10,19 @@ class TransactionDetail extends Model
     use HasFactory;
 
     protected $fillable = [
-    'price', 
-    'product_name', 
-    'quantity', 
-    'product_id', 
-    'product_transaction_id'
-];
+        'product_transaction_id',
+        'product_id',
+        'quantity',
+        'price'
+    ];
 
-    public function product()
+    public function productTransaction(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(ProductTransaction::class, 'transaction_id');
     }
 
-    public function productTransaction()
+    public function product(): BelongsTo
     {
-        return $this->belongsTo(ProductTransaction::class, 'product_transaction_id');
+        return $this->belongsTo(Product::class, 'product_id');
     }
 }

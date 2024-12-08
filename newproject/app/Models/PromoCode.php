@@ -18,6 +18,6 @@ class PromoCode extends Model
 
     public function product_transaction() : HasMany 
     {
-        return $this->hasMany(ProductTransaction::class);
+        return $this->hasMany(ProductTransaction::class, 'promo_code_id');
     }
 }

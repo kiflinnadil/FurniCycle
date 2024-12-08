@@ -35,16 +35,6 @@
                 {{ $product->description }}
             </p>
 
-            <form class="mt-3" method="post" action="{{ route('pesan', ['id' => $product->id]) }}">
-                @csrf
-                <tr>
-                    <td>Jumlah Pesan</td>
-                    <td>:</td>
-                    <td>
-                        <input type="text" name="jumlah_pesan" id="" class="form-control" required>
-                    </td>
-                </tr>
-                
                 <div style="display: flex; gap: 20px; margin-top: 40px;">
                     <a href="{{ route('transactions.checkout', ['productId' => $product->id]) }}">
                         <button 
@@ -59,7 +49,6 @@
                         </button>
                     </a>
                 </div>           
-            </form>
         </div>
     </div>
 </div>

@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
-    //
     use HasFactory;
 
     protected $fillable = [
@@ -23,12 +22,7 @@ class Product extends Model
         'category_id',
     ];
 
-    public function transaction()
-    {
-        return $this->belongsToMany(ProductTransaction::class, 'transaction_details');
-    }
-
-    public function category() : BelongsTo
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
@@ -38,13 +32,8 @@ class Product extends Model
         return $this->hasMany(TransactionDetail::class);
     }
 
-    public function cart() : HasMany
+    public function cart(): HasMany
     {
         return $this->hasMany(Cart::class);
-    }
-
-    public function setNameAttribute($value)
-    {
-        $this->attributes['name'] = $value;
     }
 }

@@ -58,22 +58,16 @@ Route::middleware('auth')->group(function () {
         Route::put('promo_codes/update/{promoCode}', [PromoCodeController::class, 'update'])->name('promo_codes.update');
         Route::delete('promo_codes/destroy/{promoCode}', [PromoCodeController::class, 'destroy'])->name('promo_codes.destroy');
 
-
+        // Transaction
         Route::get('/product-transactions', [ProductTransactionController::class, 'index'])->name('product_transactions.index');
-
-
     });
 //
-    Route::middleware(['role:buyer'])->group(function () {
-        // Route::get('product_transaction', [ProductTransactionController::class, 'index'])->name('transactions.index');
-        // Route::get('product_transaction/create', [ProductTransactionController::class, 'create'])->name('transactions.create');
-        // Route::post('product_transaction/store', [ProductTransactionController::class, 'store'])->name('transactions.store');
-        // Route::get('product_transaction/{transaction}', [ProductTransactionController::class, 'show'])->name('transactions.show');
+    Route::middleware(['auth', 'role:buyer'])->group(function () {
         Route::get('/checkout/{productId}', [ProductTransactionController::class, 'checkout'])->name('transactions.checkout');
-        Route::post('/checkout', [ProductTransactionController::class, 'store'])->name('transactions.store');
+        Route::post('/transactions', [ProductTransactionController::class, 'store'])->name('transactions.store');
+        Route::get('/transactions', [ProductTransactionController::class, 'index'])->name('transactions.index');
 
-        Route::post('pesan', [ProductTransactionController::class, 'pesan'])->name('pesan');
-    });
+});
 
 });
 

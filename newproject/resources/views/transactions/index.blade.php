@@ -34,7 +34,9 @@
                                 @foreach ($products as $product)
                                 <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $product->name }}</td>
                                 @endforeach
-                                <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->quantity }}</td>
+                                @foreach ($transaction_details as $data)
+                                <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $data->quantity }}</td>
+                                @endforeach
                                 <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->city }}</td>
                                 <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->address }}</td>
                                 <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->post_code }}</td>

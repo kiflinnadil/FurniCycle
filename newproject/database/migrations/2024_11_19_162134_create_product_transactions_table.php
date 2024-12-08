@@ -13,18 +13,18 @@ return new class extends Migration
     {
         Schema::create('product_transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('product_name');
-            $table->integer('quantity');
+            $table->string('name'); // Nama transaksi
             $table->string('phone_number');
             $table->text('address');
             $table->string('post_code');
             $table->string('city');
-            $table->text('notes');
-            $table->boolean('is_paid');
-            $table->unsignedBigInteger('price');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('payment_id')->constrained()->onDelete('cascade');
-            $table->foreignId('promo_code_id')->nullable()->constrained()->onDelete('cascade');
+            $table->text('notes')->nullable();
+            $table->boolean('is_paid')->default(false);
+            $table->unsignedBigInteger('total_price')->default(0);
+            $table->unsignedBigInteger('discount_amount')->default(0); // Perbaikan nama kolom
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Relasi ke tabel users
+            $table->foreignId('payment_id')->constrained()->onDelete('cascade'); // Relasi ke tabel payments
+            $table->foreignId('promo_code_id')->nullable()->constrained()->onDelete('cascade'); // Relasi ke tabel promo_codes (nullable)
             $table->timestamps();
         });
     }

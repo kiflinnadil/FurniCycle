@@ -6,51 +6,44 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Laravel\Prompts\Prompt;
 
 class ProductTransaction extends Model
 {
-    //
     use HasFactory;
 
     protected $table = 'product_transactions';
 
     protected $fillable = [
-        'product_name',
-        'quantity',
-        'phone_number',
-        'address',
-        'post_code',
-        'city',
-        'notes',
-        'is_paid',
-        'price',
-        'user_id',
-        'promo_code_id',
-        'payment_id',
+        'name', // Nama
+        'phone_number', // Nomor Telepon
+        'address', // Alamat
+        'post_code', // Kode Pos
+        'city', // Kota
+        'notes', // Catatan
+        'is_paid', // Status Pembayaran
+        'total_price', // Total Harga
+        'discount_amount', // Diskon
+        'user_id', // User yang membuat transaksi
+        'promo_code_id', // ID Promo Code
+        'payment_id', // ID Pembayaran
     ];
 
-    public function product()
+    public function transactionDetails(): HasMany
     {
-        return $this->belongsToMany(Product::class, 'transaction_details');
-    }
-    
-    public function transactionDetails()
-    {
-        return $this->hasMany(TransactionDetail::class);
+        return $this->hasMany(TransactionDetail::class, 'product_transaction_id');
     }
 
-    public function user() : BelongsTo 
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function promo_code() : BelongsTo 
+    public function promoCode(): BelongsTo
     {
         return $this->belongsTo(PromoCode::class, 'promo_code_id');
     }
 
-    public function payment() : BelongsTo 
+    public function payment(): BelongsTo
     {
         return $this->belongsTo(Payment::class, 'payment_id');
     }
