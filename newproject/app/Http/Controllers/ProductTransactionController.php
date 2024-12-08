@@ -89,7 +89,7 @@ class ProductTransactionController extends Controller
                 'notes' => $validated['notes'] ?? '',
                 'promo_code_id' => $promoCode ? $promoCode->id : null,
                 'discount_amount' => $discount,
-                'user_id' => $validated['user_id'] // Menggunakan user_id dari validasi
+                'user_id' => $validated['user_id']
             ]);
 
             // Ambil semua produk yang dipilih sekaligus

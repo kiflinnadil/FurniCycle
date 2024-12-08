@@ -39,8 +39,8 @@ class TransactionDetailController extends Controller
             'city' => 'required|string|max:100',
             'notes' => 'nullable|string',
             'quantity' => 'required|integer|min:1',
-            'promo_code_id' => 'nullable|exists:promo_codes,id', // Add promo_code validation
-            'payment_id' => 'required|exists:payments,id', // Validate payment method
+            'promo_code_id' => 'nullable|exists:promo_codes,id',
+            'payment_id' => 'required|exists:payments,id',
         ]);
 
         // Retrieve product
@@ -63,11 +63,11 @@ class TransactionDetailController extends Controller
             'city' => $validated['city'],
             'notes' => $validated['notes'],
             'quantity' => $validated['quantity'],
-            'sub_total_amount' => $product->price * $validated['quantity'], // Store the subtotal without discount
-            'total_amount' => $totalPrice, // Store the total after discount
+            'sub_total_amount' => $product->price * $validated['quantity'],
+            'total_amount' => $totalPrice,
             'is_paid' => false,
-            'payment_id' => $validated['payment_id'], // Store the payment method
-            'promo_code_id' => $validated['promo_code_id'], // Store the promo code ID
+            'payment_id' => $validated['payment_id'],
+            'promo_code_id' => $validated['promo_code_id'],
         ]);
 
         // Create transaction details (for each product in the transaction)

@@ -29,32 +29,29 @@
                 <tbody>
                     <tbody>
                         @foreach ($transactions as $transaction)
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->user->name }}</td>
-                                @foreach ($products as $product)
-                                <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $product->name }}</td>
-                                @endforeach
-                                @foreach ($transaction_details as $data)
-                                <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $data->quantity }}</td>
-                                @endforeach
-                                <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->city }}</td>
-                                <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->address }}</td>
-                                <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->post_code }}</td>
-                                <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->phone_number }}</td>
-                                <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->is_paid }}</td>
-                                <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->notes }}</td>
-                                <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200 h-full">
-                                    <div class="flex justify-start items-center space-x-2 h-full">
-                                        <a href="#">
-                                            <button type="button" class="bg-green-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-green-600 transition duration-200">
-                                                Confirm
-                                            </button>
-                                        </a>
-                                    </div>
-                                </td>
-                                
-                            </tr>
-                        @endforeach
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->user->name }}</td>
+                            @foreach ($transaction->transactionDetails as $detail)
+                                <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $detail->product->name }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $detail->quantity }}</td>
+                            @endforeach
+                            <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->city }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->address }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->post_code }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->phone_number }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->is_paid }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->notes }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200 h-full">
+                                <div class="flex justify-start items-center space-x-2 h-full">
+                                    <a href="#">
+                                        <button type="button" class="bg-green-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-green-600 transition duration-200">
+                                            Confirm
+                                        </button>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>                    
                 </tbody>
             </table>

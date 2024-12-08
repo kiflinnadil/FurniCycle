@@ -15,7 +15,6 @@
     </head>
     <body class="font-sans antialiased">
         <div class="flex h-screen">
-            <!-- Sidebar hanya untuk halaman selain Profile -->
             @if(auth()->user() && request()->routeIs('dashboard') || request()->routeIs('products.index') || request()->routeIs('categories.index') || request()->routeIs('promo_codes.index') || request()->routeIs('payments.index') || request()->routeIs('product_transactions.index') || request()->routeIs('product_transactions.details'))
                 <aside class="w-64 bg-gray-500 text-white flex-shrink-0 hidden md:flex flex-col">
                     <div class="py-6 px-4">
@@ -52,11 +51,6 @@
                             class="flex items-center py-4 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded transition border-b-0">
                             <span class="material-icons text-gray-900 text-white">{{ __('Product Transaction') }}</span>
                         </x-nav-link>
-                        
-                        {{-- <x-nav-link :href="route('product_transactions.details')" :active="request()->routeIs('product_transactions.details')" 
-                            class="flex items-center py-4 px-4 text-gray-300 hover:bg-gray-700 hover:text-white rounded transition border-b-0">
-                            <span class="material-icons text-gray-900 text-white">{{ __('Product Transaction') }}</span>
-                        </x-nav-link> --}}
                     </nav>
                 </aside>
             @endif
