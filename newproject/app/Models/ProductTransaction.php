@@ -14,18 +14,18 @@ class ProductTransaction extends Model
     protected $table = 'product_transactions';
 
     protected $fillable = [
-        'name', // Nama
-        'phone_number', // Nomor Telepon
-        'address', // Alamat
-        'post_code', // Kode Pos
-        'city', // Kota
-        'notes', // Catatan
-        'is_paid', // Status Pembayaran
-        'total_price', // Total Harga
-        'discount_amount', // Diskon
-        'user_id', // User yang membuat transaksi
-        'promo_code_id', // ID Promo Code
-        'payment_id', // ID Pembayaran
+        'name',
+        'phone_number', 
+        'address',
+        'post_code',
+        'city',
+        'notes',
+        'is_paid',
+        'total_price',
+        'discount_amount',
+        'user_id',
+        'promo_code_id',
+        'payment_id',
     ];
 
     public function transactionDetails(): HasMany

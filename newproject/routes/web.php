@@ -60,6 +60,8 @@ Route::middleware('auth')->group(function () {
 
         // Transaction
         Route::get('/product-transactions', [ProductTransactionController::class, 'index'])->name('product_transactions.index');
+        Route::post('/transaction/{id}/confirm', [ProductTransactionController::class, 'confirm'])->name('transaction.confirm');
+
     });
 //
     Route::middleware(['auth', 'role:buyer'])->group(function () {
@@ -81,5 +83,5 @@ Route::get('/about', function () {
 });
 
 Route::get('/contact', function () {
-    return view('contact', ['contact' => '085234917876']);
+    return view('contact');
 });

@@ -14,10 +14,10 @@
         <div class="grid grid-cols-2 gap-8 max-w-7xl mx-auto mt-[500px]">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-3 mt-28">
                 <h1 class="text-right text-4xl md:text-4xl font-bold text-black leading-tighta" style="font-family: 'Playfair Display', sans-serif; line-height: 0.9">
-                    Welcome to Furniture Haven, where we believe that your home is more than just a place...
+                    Welcome to FurniCycle, where we believe that your home is more than just a place...
                 </h1>
                 <p class="text-right text-base text-gray-700 leading-relaxed mt-10">
-                    It's a sanctuary, a canvas, and a reflection of your unique style and personality. Our journey began with a simple yet profound idea – to offer a diverse range of high-quality furniture that caters to the diverse tastes and needs of our customers. At Furniture Haven, we're committed to providing more than just products. We're dedicated to enriching your life at home, whether you're redecorating, moving into a new space, or simply looking to refresh your surroundings. With us, you're not just buying furniture; you're investing in the comfort, style, and ambiance of your home.            
+                    It's a sanctuary, a canvas, and a reflection of your unique style and personality. Our journey began with a simple yet profound idea – to offer a diverse range of high-quality furniture that caters to the diverse tastes and needs of our customers. At FurniCycle, we're committed to providing more than just products. We're dedicated to enriching your life at home, whether you're redecorating, moving into a new space, or simply looking to refresh your surroundings. With us, you're not just buying furniture; you're investing in the comfort, style, and ambiance of your home.            
                 </p>
             </div>
         
@@ -40,7 +40,7 @@
                     FurniCycle was founded by us in 2024 with a vision to transform houses into homes
                 </h1>
                 <p class="text-left text-base md:text-lg text-gray-700 leading-relaxed mt-10 ">
-                    With a passion for design and a keen eye for quality, we set out to create a furniture destination where every piece tells a story of craftsmanship and beauty. Since our inception, we've grown and evolved, always guided by the principles of exceptional quality, outstanding customer service, and a deep love for creating inviting living spaces. Our team of designers, artisans, and furniture enthusiasts is committed to making Furniture Haven a place where you find not just products, but experiences that resonate with your lifestyle.
+                    With a passion for design and a keen eye for quality, we set out to create a furniture destination where every piece tells a story of craftsmanship and beauty. Since our inception, we've grown and evolved, always guided by the principles of exceptional quality, outstanding customer service, and a deep love for creating inviting living spaces. Our team of designers, artisans, and furniture enthusiasts is committed to making FurniCycle a place where you find not just products, but experiences that resonate with your lifestyle.
                 </p>
             </div>
         </div>

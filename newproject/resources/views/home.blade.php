@@ -4,6 +4,11 @@
 @section('content')
 <div class="min-h-full text-center relative">
     <main>
+
+        @if (session()->has('success'))
+        <x-alert message="{{ session('success') }}"></x-alert>
+        @endif
+
         <div class="mx-auto max-w-5xl px-3 py-6 sm:px-6 lg:px-8 flex items-center justify-center h-screen lg:w-1/2">
             <h1 class="text-[12vw] mt-20 text-gray-300 font-bold absolute transform -translate-y-[100%]" style="font-family: 'Playfair Display', sans-serif; line-height: 0.9;">
                 OUR<br>COLLECTION
@@ -11,7 +16,7 @@
             <img src="{{ asset('image/home/7.jpg') }}" alt="Collection Image" class="absolute w-[80%] mt-24 mx-auto max-w-[45%]">
         </div>
 
-        <div class="grid grid-cols-2 gap-8 max-w-7xl mx-auto py-6 px-6">
+        <div class="grid grid-cols-2 gap-8 max-w-7xl mx-auto py-6 px-6 mt-[-70px]">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <h4 class="text-right text-sm font-medium text-gray-500 uppercase tracking-widest mb-4">About Us</h4>
                 <h1 class="text-right text-4xl md:text-6xl font-bold text-black leading-tighta" style="font-family: 'Playfair Display', sans-serif; line-height: 0.9">
@@ -21,12 +26,12 @@
 
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24">  
                 <p class="text-left text-base md:text-lg text-gray-700 leading-relaxed mt-10">
-                    At Furniture Haven, we’re not just selling furniture; we’re transforming spaces, enhancing comfort, and creating warmth. Each piece is thoughtfully designed to elevate any room while reflecting your unique style. We believe furniture is more than functional—it’s a personal expression.
+                    At FurniCycle, we’re not just selling furniture; we’re transforming spaces, enhancing comfort, and creating warmth. Each piece is thoughtfully designed to elevate any room while reflecting your unique style. We believe furniture is more than functional—it’s a personal expression.
                     <br><br>
                     Our journey began with a simple idea: to offer high-quality furniture for diverse tastes and needs. Over time, this has grown into a commitment to craftsmanship, durability, and elegance. At Furniture Haven, we’re here to help turn your house into a home and create spaces that inspire joy and comfort.                </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 items-start max-w-7xl mx-auto py-20 px-6 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 items-start max-w-7xl mx-auto py-20 px-6 gap-8 mt-[-70px]">
             <div class="self-start">
                 <h4 class="text-left text-sm font-medium text-gray-500 uppercase tracking-widest mb-4">LIGHTNING SOLUTIONS</h4>
                 <h1 class="text-left text-3xl md:text-5xl font-bold text-black leading-tight font-serif mb-6">

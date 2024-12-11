@@ -42,12 +42,6 @@
                             Beli Sekarang
                         </button>
                     </a>
-                    <a href="">
-                        <button 
-                            style="padding: 12px 30px; background-color: #6c757d; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer;">
-                            Tambahkan ke Keranjang
-                        </button>
-                    </a>
                 </div>           
         </div>
     </div>

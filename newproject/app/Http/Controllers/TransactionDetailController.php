@@ -43,17 +43,13 @@ class TransactionDetailController extends Controller
             'payment_id' => 'required|exists:payments,id',
         ]);
 
-        // Retrieve product
         $product = Product::findOrFail($request->product_id);
 
-        // Check if promo code is applied
         $promoCode = PromoCode::find($request->promo_code_id);
         $discountAmount = $promoCode ? $promoCode->discount_amount : 0;
 
-        // Calculate the total price with the discount
         $totalPrice = $product->price * $validated['quantity'] - $discountAmount;
 
-        // Create the product transaction
         $transaction = ProductTransaction::create([
             'user_id' => $request->user()->id,
             'product_name' => $product->name,
@@ -70,7 +66,6 @@ class TransactionDetailController extends Controller
             'promo_code_id' => $validated['promo_code_id'],
         ]);
 
-        // Create transaction details (for each product in the transaction)
         TransactionDetail::create([
             'product_id' => $product->id,
             'product_transaction_id' => $transaction->id,
@@ -79,7 +74,6 @@ class TransactionDetailController extends Controller
             'price' => $product->price,
         ]);
 
-        // Update product stock
         $product->update([
             'stock' => $product->stock - $validated['quantity'],
         ]);

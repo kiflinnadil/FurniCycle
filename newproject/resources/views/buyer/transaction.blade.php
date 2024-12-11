@@ -38,7 +38,7 @@
                             id="name" 
                             name="name" 
                             class="w-full px-4 py-3 border rounded-lg text-lg" 
-                            placeholder="Full name *"
+                            placeholder=" Product Name *"
                             type="text" 
                             :value="old('name')" 
                             required 
@@ -259,7 +259,6 @@
             updateTotal();
         });
 
-        // Initial calculations
         updateSubtotal();
         updateTotal();
         updateHiddenQuantity();

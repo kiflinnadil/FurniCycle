@@ -35,7 +35,6 @@ class ProductTransactionController extends Controller
     {
         Log::info('Transaction Store Request:', $request->all());
 
-        // Validasi input
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'phone_number' => 'required|string',
@@ -125,8 +124,7 @@ class ProductTransactionController extends Controller
 
             DB::commit();
 
-            return redirect()->route('transactions.index')
-                ->with('success', 'Transaksi berhasil dibuat.');
+            return redirect()->route('home')->with('success', 'Check out berhasil.');
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -159,5 +157,29 @@ class ProductTransactionController extends Controller
     {
         $transaction = ProductTransaction::with('transactionDetails')->findOrFail($id);
         return view('transactions.show', compact('transaction'));
+    }
+
+    public function confirm($id)
+    {
+        $transaction = ProductTransaction::findOrFail($id);
+
+        Log::info('Confirm Transaction:', ['transaction_id' => $id, 'status' => $transaction->status]);
+
+        if ($transaction->is_paid !== 'done') {
+            $transaction->is_paid = 'done';
+            $transaction->save();
+
+            Log::info('Transaction updated:', ['transaction_id' => $transaction->id, 'new_status' => $transaction->is_paid]);
+
+            return response()->json([
+                'status' => 'done',
+                'message' => 'Transaksi berhasil dikonfirmasi.'
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Status transaksi sudah dikonfirmasi.'
+        ], 400);
     }
 }

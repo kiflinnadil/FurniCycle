@@ -17,13 +17,12 @@
                         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">Pembeli</th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">Produk</th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">Jumlah</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">Harga</th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">Kota</th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">Alamat</th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">Kode Pos</th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">No Handphone</th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">Status</th>
-                        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">Note</th>
-                        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 border-b border-gray-200">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,23 +30,26 @@
                         @foreach ($transactions as $transaction)
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->user->name }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->name }}</td>
                             @foreach ($transaction->transactionDetails as $detail)
-                                <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $detail->product->name }}</td>
+                                {{-- <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $detail->product->name }}</td> --}}
                                 <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $detail->quantity }}</td>
                             @endforeach
+                            <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->total_price }}</td>
                             <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->city }}</td>
                             <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->address }}</td>
                             <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->post_code }}</td>
                             <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->phone_number }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->is_paid }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200">{{ $transaction->notes }}</td>
+                    
                             <td class="px-6 py-4 text-sm text-gray-700 border-b border-gray-200 h-full">
                                 <div class="flex justify-start items-center space-x-2 h-full">
-                                    <a href="#">
-                                        <button type="button" class="bg-green-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-green-600 transition duration-200">
-                                            Confirm
-                                        </button>
-                                    </a>
+                                    @if ($transaction->status !== 'done')
+                                    <button class="bg-green-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-green-600 transition duration-200 confirm-button" data-id="{{ $transaction->id }}">
+                                        Confirm
+                                    </button>
+                                    @else
+                                    <span class="text-green-500">Done</span>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
@@ -57,5 +59,40 @@
             </table>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).on('click', '.confirm-button', function() {
+        var transactionId = $(this).data('id');
+        var $button = $(this);
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+        var $statusTd = $button.closest('tr').find('.status-column');
+        $.ajax({
+            url: '/transaction/' + transactionId + '/confirm',
+            type: 'POST',
+            data: {
+                _token: csrfToken
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'done') {
+                    $button.replaceWith('<span class="text-green-500">Done</span>');
+                    $statusTd.html('<span class="text-green-500">Done</span>');
+                    alert(response.message);
+                } else {
+                    alert('Gagal: ' + (response.message || 'Tidak ada pesan kesalahan'));
+                }
+            },
+            error: function(xhr, status, error) {
+                try {
+                    var errorResponse = JSON.parse(xhr.responseText);
+                    alert('Error: ' + (errorResponse.message || 'Terjadi kesalahan'));
+                } catch (e) {
+                    alert('Terjadi kesalahan tidak dikenal');
+                }
+            }
+        });
+    });
+    </script>
 
 </x-app-layout>

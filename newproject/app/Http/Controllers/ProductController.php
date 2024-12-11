@@ -19,7 +19,7 @@ class ProductController extends Controller
 
     public function userIndex()
     {
-        $products = Product::all();
+        $products = Product::paginate(12);
         return view ('shop', compact('products'));
     }
 

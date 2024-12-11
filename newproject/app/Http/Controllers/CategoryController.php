@@ -37,14 +37,11 @@ class CategoryController extends Controller
             'icon' => 'required',
         ]);
     
-        // Membuat kategori baru dan menyimpan ke dalam database
-
         $category = new Category();
         $category->name = $request->input('name');
         $category->icon = $request->input('icon');
         $category->save();
     
-        // Redirect atau kembali ke halaman kategori dengan pesan sukses
         return redirect()->route('categories.index')->with('success', 'Kategori berhasil ditambahkan!');
     }
 
